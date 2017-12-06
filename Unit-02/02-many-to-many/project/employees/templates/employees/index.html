@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <a href="{{url_for('employees.new')}}"> Add a new employee!</a>
+
+  <h1>Here are all the Employees</h1>
+
+  {% for employee in employees %}
+    <p>
+      {{employee.name}} {{employee.years_at_company}}
+      <br>
+      <a href="{{url_for('departments.index', departments=employee.departments)}}">See all departments for {{ employee.name }}</a>
+      <a href="{{url_for('employees.show', id=employee.id)}}">Edit a user</a>
+
+      <form action="{{url_for('employees.show', id=employee.id)}}?_method=DELETE" method="POST">
+        <input type="submit" value="X">
+      </form>
+    </p>
+  {% endfor %}
+{% endblock %}

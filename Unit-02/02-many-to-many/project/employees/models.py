@@ -1,12 +1,27 @@
 from project import db
 
+EmployeeDepartment = db.Table('employee_departments',
+                              db.Column('id',
+                                        db.Integer,
+                                        primary_key=True),
+                              db.Column('employee_id',
+                                        db.Integer,
+                                        db.ForeignKey('employees.id', ondelete="cascade")),
+                              db.Column('department_id',
+                                        db.Integer,
+                                        db.ForeignKey('departments.id', ondelete="cascade")))
+
+
 class Employee(db.Model):
     __tablename__ = 'employees'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.Text)
-    last_name = db.Column(db.Text)
+    name = db.Column(db.Text)
+    years_at_company = db.Column(db.Integer)
+    departments = db.relationship("Department",
+                                  secondary=EmployeeDepartment,
+                                  backref=db.backref('employees'))
 
-    def __init__(self, first_name, last_name):
-        self.first_name = first_name
-        self.last_name = last_name
+    def __init__(self, name, years_at_company):
+        self.name = name
+        self.years_at_company = years_at_company
