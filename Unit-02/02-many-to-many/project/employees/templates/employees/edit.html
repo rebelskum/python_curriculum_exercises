@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Edit an employee</h1>
-<form action="{{url_for('show', id=employee.id)}}?_method=PATCH" method="POST">
-    <!-- employee <input type="text" name="first_name" value="{{user.first_name}}">
-    <input type="text" name="last_name" value="{{user.last_name}}">
-    <button>Edit a user</button> -->
+<form action="{{url_for('employees.show', id=employee.id)}}?_method=PATCH" method="POST">
+
     {{ employee_form.hidden_tag() }}
-            <!-- <input type="text" name="first_name">
-            <input type="text" name="last_name"> -->
-            {% for field in form if field.widget.input_type != 'hidden' %}
+
+            {% for field in employee_form if field.widget.input_type != 'hidden' %}
             <p>
                 {{field.label}}
                 {{field}}
